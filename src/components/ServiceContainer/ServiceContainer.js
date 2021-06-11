@@ -19,7 +19,7 @@ const AUDIO_TRANSCRIPTION_ERROR_DESCRIPTION =
 const GDPR_DISCLAIMER =
   'This system is for demonstration purposes only and is not intended to process Personal Data. No Personal Data is to be entered into this system as it may not have the necessary controls in place to meet the requirements of the General Data Protection Regulation (EU) 2016/679.';
 
-export const ServiceContainer = () => {
+export const ServiceContainer = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const audioWaveContainerRef = useRef(null);
 
@@ -38,7 +38,7 @@ export const ServiceContainer = () => {
     });
   }, []);
 
-  const parseResults = data => {
+  const parseResults = (data) => {
     if (data.speaker_labels) {
       dispatch({
         speakerLabels: data.speaker_labels,
@@ -79,7 +79,7 @@ export const ServiceContainer = () => {
     });
   };
 
-  const readAudioFileForVisualization = async filename => {
+  const readAudioFileForVisualization = async (filename) => {
     let containerClientWidth = null;
     if (
       audioWaveContainerRef &&
@@ -125,7 +125,7 @@ export const ServiceContainer = () => {
     }
   };
 
-  const captureAudioFromMicrophone = async recognizeOptions => {
+  const captureAudioFromMicrophone = async (recognizeOptions) => {
     let mediaStream = null;
     try {
       mediaStream = await navigator.mediaDevices.getUserMedia({
@@ -161,9 +161,9 @@ export const ServiceContainer = () => {
     return recognizeMicrophoneStream;
   };
 
-  const onSubmit = stream => {
+  const onSubmit = (stream) => {
     stream
-      .on('data', data => {
+      .on('data', (data) => {
         parseResults(data);
       })
       .on('end', () => {
@@ -213,7 +213,7 @@ export const ServiceContainer = () => {
     });
   };
 
-  const onStartPlayingFileUpload = async recognizeConfig => {
+  const onStartPlayingFileUpload = async (recognizeConfig) => {
     cleanUpOldStreamIfNecessary();
 
     const stream = recognizeFile(recognizeConfig);
@@ -250,7 +250,7 @@ export const ServiceContainer = () => {
     });
   };
 
-  const onStartPlayingSample = async recognizeConfig => {
+  const onStartPlayingSample = async (recognizeConfig) => {
     cleanUpOldStreamIfNecessary();
 
     const stream = recognizeFile(recognizeConfig);
@@ -287,7 +287,7 @@ export const ServiceContainer = () => {
     });
   };
 
-  const onStartRecording = async recognizeConfig => {
+  const onStartRecording = async (recognizeConfig) => {
     cleanUpOldStreamIfNecessary();
 
     const stream = await captureAudioFromMicrophone(recognizeConfig);
@@ -323,7 +323,7 @@ export const ServiceContainer = () => {
     });
   };
 
-  const onError = error => {
+  const onError = (error) => {
     dispatch({
       error,
       type: actionTypes.setError,
@@ -331,44 +331,47 @@ export const ServiceContainer = () => {
   };
 
   return (
-    <div className="service-container">
-      <Toast kind="info" subtitle={GDPR_DISCLAIMER} />
-      {state.error && (
-        <Toast
-          kind="error"
-          title={state.error.title}
-          subtitle={state.error.description}
-          hideAfterFirstDisplay={false}
-          timeout={5000}
-          onCloseButtonClick={() =>
-            dispatch({ error: null, type: actionTypes.setError })
-          }
+    <>
+      <button onClick={props.handleLogout}>Logout</button>
+      <div className="service-container">
+        <Toast kind="info" subtitle={GDPR_DISCLAIMER} />
+        {state.error && (
+          <Toast
+            kind="error"
+            title={state.error.title}
+            subtitle={state.error.description}
+            hideAfterFirstDisplay={false}
+            timeout={5000}
+            onCloseButtonClick={() =>
+              dispatch({ error: null, type: actionTypes.setError })
+            }
+          />
+        )}
+        <ControlContainer
+          isRecording={state.isRecording}
+          isSamplePlaying={state.isSamplePlaying}
+          isUploadPlaying={state.isUploadPlaying}
+          onError={onError}
+          onSelectNewModel={onSelectNewModel}
+          onStartPlayingFileUpload={onStartPlayingFileUpload}
+          onStopPlayingFileUpload={onStopPlayingFileUpload}
+          onStartPlayingSample={onStartPlayingSample}
+          onStopPlayingSample={onStopPlayingSample}
+          onStartRecording={onStartRecording}
+          onStopRecording={onStopRecording}
         />
-      )}
-      <ControlContainer
-        isRecording={state.isRecording}
-        isSamplePlaying={state.isSamplePlaying}
-        isUploadPlaying={state.isUploadPlaying}
-        onError={onError}
-        onSelectNewModel={onSelectNewModel}
-        onStartPlayingFileUpload={onStartPlayingFileUpload}
-        onStopPlayingFileUpload={onStopPlayingFileUpload}
-        onStartPlayingSample={onStartPlayingSample}
-        onStopPlayingSample={onStopPlayingSample}
-        onStartRecording={onStartRecording}
-        onStopRecording={onStopRecording}
-      />
-      <OutputContainer
-        audioAnalyzer={state.audioAnalyzer}
-        audioDataArray={state.audioDataArray}
-        audioDuration={state.audioDurationInMs}
-        audioSource={state.audioSource}
-        audioWaveContainerRef={audioWaveContainerRef}
-        isTranscribing={state.isTranscribing}
-        keywordInfo={state.keywordInfo}
-        transcriptArray={state.transcript}
-      />
-    </div>
+        <OutputContainer
+          audioAnalyzer={state.audioAnalyzer}
+          audioDataArray={state.audioDataArray}
+          audioDuration={state.audioDurationInMs}
+          audioSource={state.audioSource}
+          audioWaveContainerRef={audioWaveContainerRef}
+          isTranscribing={state.isTranscribing}
+          keywordInfo={state.keywordInfo}
+          transcriptArray={state.transcript}
+        />
+      </div>
+    </>
   );
 };
 

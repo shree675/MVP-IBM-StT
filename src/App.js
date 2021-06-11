@@ -8,12 +8,9 @@ import LogoGithub24 from '@carbon/icons-react/lib/logo--github/24';
 import Header from './components/Header';
 import ServiceContainer from './components/ServiceContainer';
 import useScript from './hooks/useScript';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import History from './components/History/History';
+import HomePage from './components/HomePage/home-page';
 
 // const HEADER_TITLE = 'Watson Speech to Text';
 // const HEADER_DESCRIPTION =
@@ -70,17 +67,18 @@ export const App = () => {
 
   return (
     <Router>
-    <div className="app-container">
-      {/* <Header
+      <div className="app-container">
+        {/* <Header
         description={HEADER_DESCRIPTION}
         links={HEADER_LINKS}
         title={HEADER_TITLE}
       /> */}
-      <Switch>
-          <Route exact path="/" component={ServiceContainer}/>
-          <Route exact path='/history' component={History}/>
+        <Switch>
+          {/* <Route exact path="/" component={}/> */}
+          <Route exact path="/" component={HomePage}></Route>
+          <Route exact path="/history" component={History} />
         </Switch>
-    </div>
+      </div>
     </Router>
   );
 };
