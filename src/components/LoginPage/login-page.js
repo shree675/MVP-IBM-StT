@@ -1,4 +1,4 @@
-import { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,7 +13,6 @@ import fire from '../../firebase';
 import firebase from 'firebase';
 import { makeStyles } from '@material-ui/core/styles';
 // const bcrypt = require("bcrypt");
-import ReactEncrypt from 'react-encrypt';
 // import wave from './wave.svg';
 import './login-page.css';
 import google from '../../assets/google.svg';

@@ -106,15 +106,15 @@ const getToken = async () => {
   return tokenResponse;
 };
 
-// app.get('/', (_, res) => {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
+app.get('/', (_, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // app.use('/', function (req, res) {
 //   res.render('./src/App.js');
 // });
 
-app.use(express.static('src/App.js'));
+// app.use(express.static('src/App.js'));
 
 app.get('/health', (_, res) => {
   res.json({ status: 'UP' });
