@@ -48,7 +48,10 @@ if (sttAuthType === 'cp4d') {
   });
 } else if (sttAuthType === 'iam') {
   try {
-    tokenManager = new IamTokenManager({ apikey });
+    tokenManager = new IamTokenManager({
+      apikey,
+      disableSslVerification: true,
+    });
   } catch (err) {
     console.log('Error: ', err);
   }
@@ -65,7 +68,7 @@ const getToken = async () => {
   try {
     if (tokenManager) {
       const token = await tokenManager.getToken({
-        // disableSslVerification: true,
+        disableSslVerification: true,
         // rejectUnauthorized: false,
       });
       tokenResponse = {
@@ -106,15 +109,15 @@ const getToken = async () => {
   return tokenResponse;
 };
 
-app.get('/', (_, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('/', (_, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 // app.use('/', function (req, res) {
 //   res.render('./src/App.js');
 // });
 
-// app.use(express.static('src/App.js'));
+app.use(express.static('src/index.js'));
 
 app.get('/health', (_, res) => {
   res.json({ status: 'UP' });
@@ -122,7 +125,7 @@ app.get('/health', (_, res) => {
 
 app.get('/api/auth', async (_, res, next) => {
   const token = await getToken({
-    // disableSslVerification: true,
+    disableSslVerification: true,
     // rejectUnauthorized: false,
   });
 
