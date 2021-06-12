@@ -14,7 +14,7 @@ import firebase from 'firebase';
 import { makeStyles } from '@material-ui/core/styles';
 // const bcrypt = require("bcrypt");
 import ReactEncrypt from 'react-encrypt';
-import wave from './wave.svg';
+// import wave from './wave.svg';
 import './login-page.css';
 import google from '../../assets/google.svg';
 import twitter from '../../assets/twitter.svg';
