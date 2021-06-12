@@ -71,6 +71,8 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
 export const TranscriptBox = ({ keywordInfo, transcriptArray }) => {
   let content = '';
 
+  var x = 0;
+
   const textSubmitHandler = () => {
     const inputText = {
       message: content,
@@ -109,8 +111,13 @@ export const TranscriptBox = ({ keywordInfo, transcriptArray }) => {
                     <span
                       key={`transcript-text-${overallIndex}-${elementIndex}`}
                     >
-                      {`${element.text}`}
-                      {(content = element.text)}
+                      {
+                        (`${element.text[element.text.length / 2]}` ===
+                        undefined
+                          ? null
+                          : `${element.text[element.text.length / 2]}`,
+                        (content = element.text))
+                      }
                     </span>
                   );
                 } else if (element.type === 'keyword') {
@@ -128,8 +135,13 @@ export const TranscriptBox = ({ keywordInfo, transcriptArray }) => {
                       }
                       triggerClassName="keyword-info-trigger"
                     >
-                      {element.text}
-                      {(content = element.text)}
+                      {
+                        (`${element.text[element.text.length / 2]}` ===
+                        undefined
+                          ? null
+                          : `${element.text[element.text.length / 2]}`,
+                        (content = element.text))
+                      }
                     </TooltipDefinition>
                   );
                 }

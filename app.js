@@ -113,10 +113,6 @@ const getToken = async () => {
 //   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 // });
 
-// app.use('/', function (req, res) {
-//   res.render('./src/App.js');
-// });
-
 app.use(express.static('src/index.js'));
 
 app.get('/health', (_, res) => {
