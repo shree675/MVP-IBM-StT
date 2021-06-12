@@ -31,7 +31,9 @@
     "build": "set INLINE_RUNTIME_CHUNK=false && react-scripts build",
     "test": "npm run test:components && npm run test:integration",
     "test:components": "cross-env CI=true react-scripts test --env=jsdom --passWithNoTests",
-    "test:integration": "JEST_PUPPETEER_CONFIG='test/jest-puppeteer.config.js' jest test -c test/jest.config.js"
+    "test:integration": "JEST_PUPPETEER_CONFIG='test/jest-puppeteer.config.js' jest test -c test/jest.config.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-client && npm run build",
+    "install-client": "npm install"
   },
   "eslintConfig": {
     "extends": "react-app"
