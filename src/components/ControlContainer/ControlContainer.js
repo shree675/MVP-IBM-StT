@@ -22,8 +22,9 @@ export const ControlContainer = ({
   onStopPlayingSample,
   onStartRecording,
   onStopRecording,
+  logged,
 }) => {
-  const dropdownChoices = models.map(model => ({
+  const dropdownChoices = models.map((model) => ({
     id: model.name,
     label: model.description,
     supportsSpeakerLabels: model.supported_features.speaker_labels,
@@ -33,11 +34,11 @@ export const ControlContainer = ({
   const [keywordText, setKeywordText] = useState(models[0].keywords);
   const [useSpeakerLabels, setUseSpeakerLabels] = useState(false);
 
-  const onChangeLanguageModel = newModel => {
+  const onChangeLanguageModel = (newModel) => {
     selectModel(newModel.selectedItem);
 
     const newKeywordText = models.find(
-      model => model.name === newModel.selectedItem.id,
+      (model) => model.name === newModel.selectedItem.id,
     ).keywords;
     setKeywordText(newKeywordText);
 
@@ -63,20 +64,6 @@ export const ControlContainer = ({
           light
         />
       </FormGroup>
-      <FormGroup legendText="Keywords to spot">
-        <TextArea
-          id="custom-keyword-input"
-          labelText="Custom language keyword input"
-          placeholder="Enter custom language keywords"
-          hideLabel
-          invalidText="Invalid keywords provided"
-          value={keywordText}
-          onChange={evt => {
-            setKeywordText(evt.target.value);
-          }}
-          light
-        />
-      </FormGroup>
       <FormGroup legendText="Detect multiple speakers (only supported with sample audio)">
         <ToggleSmall
           id="speaker-label-toggle"
@@ -89,7 +76,6 @@ export const ControlContainer = ({
         />
       </FormGroup>
       <SubmitContainer
-        isRecording={isRecording}
         isSamplePlaying={isSamplePlaying}
         isUploadPlaying={isUploadPlaying}
         keywordText={keywordText}
@@ -99,8 +85,6 @@ export const ControlContainer = ({
         onStopPlayingFileUpload={onStopPlayingFileUpload}
         onStartPlayingSample={onStartPlayingSample}
         onStopPlayingSample={onStopPlayingSample}
-        onStartRecording={onStartRecording}
-        onStopRecording={onStopRecording}
         useSpeakerLabels={useSpeakerLabels}
       />
     </Tile>

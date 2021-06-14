@@ -68,15 +68,10 @@ export const App = () => {
   return (
     <Router>
       <div className="app-container">
-        {/* <Header
-        description={HEADER_DESCRIPTION}
-        links={HEADER_LINKS}
-        title={HEADER_TITLE}
-      /> */}
         <Switch>
-          {/* <Route exact path="/" component={}/> */}
-          <Route exact path="/" component={HomePage}></Route>
+          <Route exact path="/" component={History}></Route>
           <Route exact path="/history" component={History} />
+          <Route exact path="/servicecontainer" component={HomePage} />
         </Switch>
       </div>
     </Router>

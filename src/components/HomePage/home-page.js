@@ -10,7 +10,7 @@ const HomePage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState(false);
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState('wait');
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -59,7 +59,7 @@ const HomePage = () => {
   };
 
   const handleLogout = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     fire.auth().signOut();
     authListener();
   };
@@ -82,17 +82,11 @@ const HomePage = () => {
   const onChangeUsername = (e) => {
     e.preventDefault();
     setEmail(e.target.value);
-    // this.setState({
-    //     email: e.target.value,
-    // });
   };
 
   const onChangePassword = (e) => {
     e.preventDefault();
     setPassword(e.target.value);
-    // this.setState({
-    //     password: e.target.value,
-    // });
   };
 
   useEffect(() => {
@@ -101,7 +95,11 @@ const HomePage = () => {
 
   return (
     <div>
-      {user !== null ? (
+      {user === 'wait' ? (
+        <div>
+          <h3 style={{ textAlign: `center` }}>Please wait...</h3>
+        </div>
+      ) : user !== null ? (
         <ServiceContainer handleLogout={handleLogout} />
       ) : (
         <LoginPage
@@ -123,5 +121,4 @@ const HomePage = () => {
   );
 };
 
-// export default withStyles(styles, { withTheme: true })(HomePage);
 export default HomePage;

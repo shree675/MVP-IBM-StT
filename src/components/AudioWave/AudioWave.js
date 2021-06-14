@@ -95,7 +95,7 @@ export class AudioWave extends React.Component {
 
     const { microphoneData } = this.state;
     const arrayData = [].slice.call(microphoneData);
-    const floatArray = arrayData.map(n => n / 255);
+    const floatArray = arrayData.map((n) => n / 255);
 
     floatArray.forEach((dataPoint, i) => {
       this.audioWaveCanvasCtx.beginPath();
@@ -185,13 +185,18 @@ export class AudioWave extends React.Component {
   }
 
   resetCanvasForNewFrame() {
-    const audioWaveCanvas = this.audioWaveCanvasRef.current;
-    this.audioWaveCanvasCtx.clearRect(
-      0,
-      0,
-      audioWaveCanvas.width,
-      audioWaveCanvas.height,
-    );
+    try {
+      const audioWaveCanvas = this.audioWaveCanvasRef.current;
+      this.audioWaveCanvasCtx.clearRect(
+        0,
+        0,
+        audioWaveCanvas.width,
+        audioWaveCanvas.height,
+      );
+    } catch (error) {
+      // console.log(error);
+      // do nothing
+    }
   }
 
   stopDrawing() {

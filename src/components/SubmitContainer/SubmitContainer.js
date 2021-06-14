@@ -5,7 +5,6 @@ import fetch from 'isomorphic-fetch';
 import models from '../../data/models.json';
 
 export const SubmitContainer = ({
-  isRecording,
   isSamplePlaying,
   isUploadPlaying,
   keywordText,
@@ -15,20 +14,18 @@ export const SubmitContainer = ({
   onStopPlayingFileUpload,
   onStartPlayingSample,
   onStopPlayingSample,
-  onStartRecording,
-  onStopRecording,
   useSpeakerLabels,
 }) => {
   const [keywordList, setKeywordList] = useState([]);
   useEffect(() => {
     let newKeywordList = [];
     if (keywordText.length > 0) {
-      newKeywordList = keywordText.split(',').map(k => k.trim());
+      newKeywordList = keywordText.split(',').map((k) => k.trim());
     }
     setKeywordList(newKeywordList);
   }, [keywordText]);
 
-  const sampleModelInfo = models.find(model => model.name === modelName);
+  const sampleModelInfo = models.find((model) => model.name === modelName);
   const sampleModelFilename = sampleModelInfo ? sampleModelInfo.filename : null;
 
   const getBaseAudioConfig = async () => {
@@ -45,9 +42,7 @@ export const SubmitContainer = ({
 
     let options = {};
 
-    // We'll lowercase these so that we can ignore cases when highlighting keyword
-    // occurrences later on.
-    const lowerCasedKeywords = keywordList.map(keyword =>
+    const lowerCasedKeywords = keywordList.map((keyword) =>
       keyword.toLowerCase(),
     );
 
@@ -78,15 +73,7 @@ export const SubmitContainer = ({
     };
   };
 
-  const getMicrophoneAudioConfig = async () => {
-    const baseConfig = await getBaseAudioConfig();
-    return {
-      ...baseConfig,
-      resultsBySpeaker: false,
-    };
-  };
-
-  const getUploadAudioConfig = async file => {
+  const getUploadAudioConfig = async (file) => {
     const baseConfig = await getBaseAudioConfig();
     return {
       ...baseConfig,
@@ -120,29 +107,6 @@ export const SubmitContainer = ({
           Play audio sample
         </Button>
       )}
-      {isRecording ? (
-        <Button
-          className="submit-button"
-          kind="tertiary"
-          onClick={onStopRecording}
-        >
-          Stop recording
-        </Button>
-      ) : (
-        <Button
-          className="submit-button"
-          disabled={!modelName}
-          kind="tertiary"
-          onClick={async () => {
-            const config = await getMicrophoneAudioConfig();
-            if (!config.error) {
-              onStartRecording(config);
-            }
-          }}
-        >
-          Record your own
-        </Button>
-      )}
       {isUploadPlaying ? (
         <Button
           className="submit-button"
@@ -159,7 +123,7 @@ export const SubmitContainer = ({
           disabled={!modelName}
           disableLabelChanges
           labelText="Upload file"
-          onChange={async evt => {
+          onChange={async (evt) => {
             const uploadedFile = evt.currentTarget.files[0];
             const config = await getUploadAudioConfig(uploadedFile);
             if (!config.error) {
