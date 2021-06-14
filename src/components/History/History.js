@@ -118,7 +118,7 @@ const History = () => {
         </div>
       ) : user !== null ? (
         <div>
-          <h1>History</h1>
+          <h1>Dashboard</h1>
           <br></br>
           <button onClick={handleLogout}>Logout</button>
           <h3>List of translations</h3>
