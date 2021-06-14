@@ -321,7 +321,14 @@ export const ServiceContainer = (props) => {
         Logout
       </button>
       <Link to="/">
-        <button style={{ textDecoration: `none` }}>List of translations</button>
+        <button
+          onClick={() => {
+            stopPlay();
+          }}
+          style={{ textDecoration: `none` }}
+        >
+          List of translations
+        </button>
       </Link>
       <div className="service-container">
         <Toast kind="info" subtitle={GDPR_DISCLAIMER} />
