@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import recognizeFile from 'watson-speech/speech-to-text/recognize-file';
 import recognizeMicrophone from 'watson-speech/speech-to-text/recognize-microphone';
 import ControlContainer from '../ControlContainer';
@@ -23,13 +23,9 @@ const GDPR_DISCLAIMER =
 export const ServiceContainer = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const audioWaveContainerRef = useRef(null);
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
-    if (window.loggedin === false) {
-      this.onStopPlayingSample();
-      stopPlay();
-    }
-
     const audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
     const audioAnalyzer = audioContext.createAnalyser();
@@ -114,6 +110,17 @@ export const ServiceContainer = (props) => {
         state.audioContext,
         audioVisualizationWidth,
       );
+
+      if (duration > 120) {
+        setTimeout(() => {
+          // stopPlay();
+          document.getElementById('st').click();
+          alert(
+            'Audio file length exceeds 2 minutes. Please upload audio files shorter than 2 minutes in duration.',
+          );
+        }, 1);
+      }
+      // setTime(duration);
 
       dispatch({
         audioDataArray: reducedFloatArray,
@@ -286,7 +293,6 @@ export const ServiceContainer = (props) => {
   };
 
   const stopPlay = () => {
-    // console.log('clicked');
     onStopPlayingSample();
     onStopPlayingFileUpload();
   };
@@ -320,8 +326,17 @@ export const ServiceContainer = (props) => {
       >
         Logout
       </button>
+      <button
+        id="st"
+        onClick={() => {
+          stopPlay();
+        }}
+      >
+        Stop Playing
+      </button>
       <Link to="/">
         <button
+          id="stop"
           onClick={() => {
             stopPlay();
           }}
@@ -353,6 +368,7 @@ export const ServiceContainer = (props) => {
           onStopPlayingFileUpload={onStopPlayingFileUpload}
           onStartPlayingSample={onStartPlayingSample}
           onStopPlayingSample={onStopPlayingSample}
+          time={time}
         />
         <OutputContainer
           audioAnalyzer={state.audioAnalyzer}

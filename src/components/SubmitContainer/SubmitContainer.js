@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import { Button, FileUploaderButton } from 'carbon-components-react';
 import fetch from 'isomorphic-fetch';
 import models from '../../data/models.json';
+// const toWav = require('audiobuffer-to-wav');
+// const audioContext = new AudioContext();
+// var audioCtx = new AudioContext();
+// var ffmpeg = require('fluent-ffmpeg');
+// var xhr = require('xhr');
+// const { getAudioDurationInSeconds } = require('get-audio-duration');
 
 export const SubmitContainer = ({
   isSamplePlaying,
@@ -15,6 +21,7 @@ export const SubmitContainer = ({
   onStartPlayingSample,
   onStopPlayingSample,
   useSpeakerLabels,
+  time,
 }) => {
   const [keywordList, setKeywordList] = useState([]);
   useEffect(() => {
@@ -117,7 +124,14 @@ export const SubmitContainer = ({
         </Button>
       ) : (
         <FileUploaderButton
-          accept={['audio/wav', 'audio/mpeg', 'audio/flac', 'audio/opus']}
+          accept={[
+            'audio/mpeg',
+            'audio/ogg',
+            'audio/wav',
+            'audio/flac',
+            'audio/opus',
+            'audio/mp3',
+          ]}
           buttonKind="tertiary"
           className="submit-button"
           disabled={!modelName}
@@ -126,12 +140,14 @@ export const SubmitContainer = ({
           onChange={async (evt) => {
             const uploadedFile = evt.currentTarget.files[0];
             const config = await getUploadAudioConfig(uploadedFile);
-            if (!config.error) {
+
+            if (!config.error && time <= 30) {
               onStartPlayingFileUpload(config);
             }
           }}
         />
       )}
+      <audio id="audio"></audio>
     </div>
   );
 };

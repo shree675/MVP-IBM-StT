@@ -122,6 +122,15 @@ export class AudioWave extends React.Component {
     const { data, duration } = this.props;
 
     // Make time calculations.
+
+    // console.log(duration);
+
+    // if (duration > 30) {
+    //   // alert('Duration more than 30s');
+    //   this.stopDrawing();
+    //   return;
+    // }
+
     const now = Date.now();
     const { startingTimestamp } = this.state;
     const timeElapsed = now - startingTimestamp;

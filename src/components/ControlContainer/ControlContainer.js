@@ -23,6 +23,7 @@ export const ControlContainer = ({
   onStartRecording,
   onStopRecording,
   logged,
+  time,
 }) => {
   const dropdownChoices = models.map((model) => ({
     id: model.name,
@@ -86,6 +87,7 @@ export const ControlContainer = ({
         onStartPlayingSample={onStartPlayingSample}
         onStopPlayingSample={onStopPlayingSample}
         useSpeakerLabels={useSpeakerLabels}
+        time={time}
       />
     </Tile>
   );

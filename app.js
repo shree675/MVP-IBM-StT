@@ -109,11 +109,11 @@ const getToken = async () => {
   return tokenResponse;
 };
 
-// app.get('/', (_, res) => {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
+app.get('/', (_, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
-app.use(express.static('src/index.js'));
+// app.use(express.static('src/index.js'));
 
 app.get('/health', (_, res) => {
   res.json({ status: 'UP' });
