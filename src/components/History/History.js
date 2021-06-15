@@ -12,7 +12,7 @@ var CryptoJS = require('crypto-js');
 
 const History = () => {
   const [message, setMessage] = useState([]);
-  const [editText, setEditText] = useState();
+  const [editText, setEditText] = useState('');
   const [showHide, setShowHide] = useState(false);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const History = () => {
     setMessage(textMessage);
   };
 
-  const textUpdateHandler = (id) => {
+  const textUpdateHandler = (id, e) => {
     const textRef = fire.database().ref('text').child(id);
     textRef.update({
       message: editText,
@@ -51,6 +51,11 @@ const History = () => {
     setEditText(newMessage);
     setShowHide(true);
   };
+
+  // const handleInputChange = event => {
+  //   const { name, value } = event.target;
+  //   setEditText( ...editText, {[name]: value} );
+  // };
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -155,8 +160,8 @@ const History = () => {
                     cols="50"
                     name="textarea"
                     value={editText}
-                    onChange={(event) =>
-                      setEditText(...editText, event.target.value)
+                    onChange={
+                      (event) => setEditText(event.target.value) 
                     }
                   />
                   <button onClick={(e) => textUpdateHandler(item.id, e)}>
