@@ -7,6 +7,7 @@ import Toast from '../Toast';
 import { actionTypes, initialState, reducer } from './reducer';
 import { convertAudioBlobToVisualizationData, formatStreamData } from './utils';
 import { createError } from '../../utils';
+import { Link } from 'react-router-dom';
 
 const FILE_UPLOAD_ERROR_TITLE = 'File upload error';
 const FILE_UPLOAD_ERROR_DESCRIPTION =
@@ -24,6 +25,11 @@ export const ServiceContainer = (props) => {
   const audioWaveContainerRef = useRef(null);
 
   useEffect(() => {
+    if (window.loggedin === false) {
+      this.onStopPlayingSample();
+      stopPlay();
+    }
+
     const audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
     const audioAnalyzer = audioContext.createAnalyser();
@@ -279,47 +285,17 @@ export const ServiceContainer = (props) => {
     onSubmit(stream);
   };
 
+  const stopPlay = () => {
+    // console.log('clicked');
+    onStopPlayingSample();
+    onStopPlayingFileUpload();
+  };
+
   const onStopPlayingSample = () => {
     handleStreamEnd();
     dispatch({
       isSamplePlaying: false,
       type: actionTypes.setIsSamplePlaying,
-    });
-  };
-
-  const onStartRecording = async (recognizeConfig) => {
-    cleanUpOldStreamIfNecessary();
-
-    const stream = await captureAudioFromMicrophone(recognizeConfig);
-    dispatch({
-      isRecording: true,
-      type: actionTypes.setIsRecording,
-    });
-    dispatch({
-      isSamplePlaying: false,
-      type: actionTypes.setIsSamplePlaying,
-    });
-    dispatch({
-      isUploadPlaying: false,
-      type: actionTypes.setIsUploadPlaying,
-    });
-    dispatch({
-      audioSource: 'microphone',
-      type: actionTypes.setAudioSource,
-    });
-    dispatch({
-      audioStream: stream,
-      type: actionTypes.setAudioStream,
-    });
-
-    onSubmit(stream);
-  };
-
-  const onStopRecording = () => {
-    handleStreamEnd();
-    dispatch({
-      isRecording: false,
-      type: actionTypes.setIsRecording,
     });
   };
 
@@ -330,9 +306,30 @@ export const ServiceContainer = (props) => {
     });
   };
 
+  window.onpopstate = function () {
+    stopPlay();
+  };
+
   return (
-    <>
-      <button onClick={props.handleLogout}>Logout</button>
+    <div>
+      <button
+        onClick={() => {
+          stopPlay();
+          props.handleLogout();
+        }}
+      >
+        Logout
+      </button>
+      <Link to="/">
+        <button
+          onClick={() => {
+            stopPlay();
+          }}
+          style={{ textDecoration: `none` }}
+        >
+          List of translations
+        </button>
+      </Link>
       <div className="service-container">
         <Toast kind="info" subtitle={GDPR_DISCLAIMER} />
         {state.error && (
@@ -348,7 +345,6 @@ export const ServiceContainer = (props) => {
           />
         )}
         <ControlContainer
-          isRecording={state.isRecording}
           isSamplePlaying={state.isSamplePlaying}
           isUploadPlaying={state.isUploadPlaying}
           onError={onError}
@@ -357,8 +353,6 @@ export const ServiceContainer = (props) => {
           onStopPlayingFileUpload={onStopPlayingFileUpload}
           onStartPlayingSample={onStartPlayingSample}
           onStopPlayingSample={onStopPlayingSample}
-          onStartRecording={onStartRecording}
-          onStopRecording={onStopRecording}
         />
         <OutputContainer
           audioAnalyzer={state.audioAnalyzer}
@@ -371,7 +365,7 @@ export const ServiceContainer = (props) => {
           transcriptArray={state.transcript}
         />
       </div>
-    </>
+    </div>
   );
 };
 

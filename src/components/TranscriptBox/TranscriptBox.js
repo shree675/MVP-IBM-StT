@@ -15,7 +15,6 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
     matches = text.split(regex);
   }
 
-  // If we don't have words to find yet, just return the interim text.
   if (matches.length === 0) {
     return [
       {
@@ -27,7 +26,6 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
 
   const wordOccurences = {};
   finalSentenceArray = matches.map((sentenceFragment, index) => {
-    // Use lowercased version when searching through keyword map.
     const fragmentToSearch = sentenceFragment.toLowerCase();
 
     if (index % 2 === 0) {
@@ -37,8 +35,6 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
       };
     }
 
-    // Find keyword info object to use based on text from sentenceFragment and
-    // current index in wordOccurences.
     const keywordInfoMatch =
       keywordInfo[totalIndex] && keywordInfo[totalIndex][fragmentToSearch];
     let keywordOccurenceIndex = 0;
@@ -51,7 +47,6 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
     const infoForOccurence =
       keywordInfoMatch && keywordInfoMatch[keywordOccurenceIndex];
 
-    // Bail in case we can't get the keyword info for whatever reason.
     if (!infoForOccurence) {
       return {};
     }
@@ -109,28 +104,14 @@ export const TranscriptBox = ({ keywordInfo, transcriptArray }) => {
                     <span
                       key={`transcript-text-${overallIndex}-${elementIndex}`}
                     >
-                      {`${element.text}`}
-                      {(content = element.text)}
-                    </span>
-                  );
-                } else if (element.type === 'keyword') {
-                  return (
-                    <TooltipDefinition
-                      align="center"
-                      direction="top"
-                      key={`transcript-keyword-${overallIndex}-${elementIndex}`}
-                      tooltipText={
-                        <KeywordTooltip
-                          confidence={element.confidence}
-                          startTime={element.startTime}
-                          endTime={element.endTime}
-                        />
+                      {
+                        (`${element.text[element.text.length / 2]}` ===
+                        undefined
+                          ? null
+                          : `${element.text[element.text.length / 2]}`,
+                        (content = element.text))
                       }
-                      triggerClassName="keyword-info-trigger"
-                    >
-                      {element.text}
-                      {(content = element.text)}
-                    </TooltipDefinition>
+                    </span>
                   );
                 }
 

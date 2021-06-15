@@ -2,6 +2,7 @@ const { Cp4dTokenManager, IamTokenManager } = require('ibm-watson/auth');
 const path = require('path');
 const express = require('express');
 const vcapServices = require('vcap_services');
+var cors = require('cors')
 const app = express();
 require('./config/express')(app);
 
@@ -13,7 +14,7 @@ require('./config/express')(app);
 // }
 
 // For starter kit env.
-require('dotenv').config({
+require('dotenv').config({ 
   silent: true,
 });
 const skitJson = JSON.parse(process.env.service_watson_speech_to_text || '{}');
@@ -48,7 +49,10 @@ if (sttAuthType === 'cp4d') {
   });
 } else if (sttAuthType === 'iam') {
   try {
-    tokenManager = new IamTokenManager({ apikey });
+    tokenManager = new IamTokenManager({
+      apikey,
+      disableSslVerification: true,
+    });
   } catch (err) {
     console.log('Error: ', err);
   }
@@ -65,7 +69,7 @@ const getToken = async () => {
   try {
     if (tokenManager) {
       const token = await tokenManager.getToken({
-        // disableSslVerification: true,
+        disableSslVerification: true,
         // rejectUnauthorized: false,
       });
       tokenResponse = {
@@ -110,11 +114,9 @@ const getToken = async () => {
 //   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 // });
 
-// app.use('/', function (req, res) {
-//   res.render('./src/App.js');
-// });
+app.use(cors())
 
-app.use(express.static('src/App.js'));
+app.use(express.static('src/index.js'));
 
 app.get('/health', (_, res) => {
   res.json({ status: 'UP' });
@@ -122,7 +124,7 @@ app.get('/health', (_, res) => {
 
 app.get('/api/auth', async (_, res, next) => {
   const token = await getToken({
-    // disableSslVerification: true,
+    disableSslVerification: true,
     // rejectUnauthorized: false,
   });
 
