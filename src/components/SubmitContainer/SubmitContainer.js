@@ -9,6 +9,7 @@ import models from '../../data/models.json';
 // var ffmpeg = require('fluent-ffmpeg');
 // var xhr = require('xhr');
 // const { getAudioDurationInSeconds } = require('get-audio-duration');
+// import { save } from 'save-file';
 
 export const SubmitContainer = ({
   isSamplePlaying,
@@ -141,13 +142,23 @@ export const SubmitContainer = ({
             const uploadedFile = evt.currentTarget.files[0];
             const config = await getUploadAudioConfig(uploadedFile);
 
-            if (!config.error && time <= 30) {
+            // var formData = new FormData();
+            // formData.append('filename', 'My awesome file');
+            // formData.append('uploadedFile', uploadedFile);
+            // fetch('/convert', { method: 'POST', body: formData }).then(
+            //   async (e) => {
+            //     await fetch('/getfile')
+            //       .then((res) => console.log(res))
+            //       .catch((err) => console.log(err));
+            //   },
+            // );
+
+            if (!config.error) {
               onStartPlayingFileUpload(config);
             }
           }}
         />
       )}
-      <audio id="audio"></audio>
     </div>
   );
 };
