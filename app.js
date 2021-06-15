@@ -110,13 +110,13 @@ const getToken = async () => {
   return tokenResponse;
 };
 
-app.get('/', (_, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('/', (_, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 app.use(cors());
 
-// app.use(express.static('src/index.js'));
+app.use(express.static('src/index.js'));
 
 // var fs = require('fs'),
 //   cloudconvert = new (require('cloudconvert'))(

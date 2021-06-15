@@ -14,6 +14,7 @@ const History = () => {
   const [message, setMessage] = useState([]);
   const [editText, setEditText] = useState('');
   const [showHide, setShowHide] = useState(false);
+  const [id1, setId1] = useState('');
 
   useEffect(() => {
     axios
@@ -40,15 +41,18 @@ const History = () => {
   };
 
   const textUpdateHandler = (id, e) => {
-    const textRef = fire.database().ref('text').child(id);
-    textRef.update({
+    e.preventDefault();
+    const textRef = fire.database().ref('text').child(id1);
+    // console.log(textRef);
+    textRef.set({
       message: editText,
     });
     setShowHide(false);
   };
 
-  const showHideHandler = (newMessage) => {
+  const showHideHandler = (newMessage, id) => {
     setEditText(newMessage);
+    setId1(id);
     setShowHide(true);
   };
 
@@ -142,9 +146,7 @@ const History = () => {
   return (
     <div>
       {user === 'wait' ? (
-        <div>
-          <h3 style={{ textAlign: `center` }}>Please wait...</h3>
-        </div>
+        <div></div>
       ) : user !== null ? (
         <div style={{ position: 'relative' }}>
           <h1>History</h1>
@@ -160,9 +162,7 @@ const History = () => {
                     cols="50"
                     name="textarea"
                     value={editText}
-                    onChange={
-                      (event) => setEditText(event.target.value) 
-                    }
+                    onChange={(event) => setEditText(event.target.value)}
                   />
                   <button onClick={(e) => textUpdateHandler(item.id, e)}>
                     save
@@ -176,7 +176,7 @@ const History = () => {
                   <div className="historyButtons">
                     <button
                       className="edit"
-                      onClick={() => showHideHandler(item.message)}
+                      onClick={() => showHideHandler(item.message, item.id)}
                     >
                       EDIT
                     </button>

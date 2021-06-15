@@ -96,9 +96,7 @@ const HomePage = () => {
   return (
     <div>
       {user === 'wait' ? (
-        <div>
-          <h3 style={{ textAlign: `center` }}>Please wait...</h3>
-        </div>
+        <div></div>
       ) : user !== null ? (
         <ServiceContainer handleLogout={handleLogout} />
       ) : (
