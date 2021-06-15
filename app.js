@@ -2,6 +2,7 @@ const { Cp4dTokenManager, IamTokenManager } = require('ibm-watson/auth');
 const path = require('path');
 const express = require('express');
 const vcapServices = require('vcap_services');
+var cors = require('cors');
 const app = express();
 require('./config/express')(app);
 
@@ -113,7 +114,9 @@ app.get('/', (_, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// app.use(express.static('src/index.js'));
+app.use(cors());
+
+app.use(express.static('src/index.js'));
 
 app.get('/health', (_, res) => {
   res.json({ status: 'UP' });
