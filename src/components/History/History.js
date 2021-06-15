@@ -6,7 +6,7 @@ import '../HomePage/home-page.css';
 import ServiceContainer from '../ServiceContainer/ServiceContainer';
 import LoginPage from '../LoginPage/login-page';
 import { PropTypes } from 'carbon-components-react';
-import './History.css'
+import './History.css';
 import Edit from '../Edit/Edit';
 var CryptoJS = require('crypto-js');
 
@@ -32,25 +32,25 @@ const History = () => {
     authListener();
   }, []);
 
-  const deleteRow = (id, e) => {  
+  const deleteRow = (id, e) => {
     const textRef = fire.database().ref('text').child(id);
     textRef.remove();
-    const textMessage = message.filter(item =>item.id!==id);
+    const textMessage = message.filter((item) => item.id !== id);
     setMessage(textMessage);
-}
+  };
 
   const textUpdateHandler = (id) => {
     const textRef = fire.database().ref('text').child(id);
     textRef.update({
-      message:editText,
-    })
+      message: editText,
+    });
     setShowHide(false);
-  }
+  };
 
   const showHideHandler = (newMessage) => {
-    setEditText(newMessage)
+    setEditText(newMessage);
     setShowHide(true);
-  }
+  };
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -141,31 +141,46 @@ const History = () => {
           <h3 style={{ textAlign: `center` }}>Please wait...</h3>
         </div>
       ) : user !== null ? (
-<<<<<<< HEAD
-        <div>
-          <h1>Dashboard</h1>
-=======
-        <div style={{position:'relative'}}>
+        <div style={{ position: 'relative' }}>
           <h1>History</h1>
->>>>>>> 1ad49eca6345ff318c2a995b93e069ec7b75d4d5
           <br></br>
           <button onClick={handleLogout}>Logout</button>
           <h3>List of translations</h3>
           <div>
             {message.map((item) => (
-              <div >
+              <div>
                 <Edit show={showHide}>
-                <textarea rows="10" cols="50" name="textarea" value={editText} onChange={(event) => setEditText(...editText, event.target.value)} />
-                <button onClick={(e) => textUpdateHandler(item.id, e)}>save</button>
-                <button onClick={() => setShowHide(false)}>close</button>
+                  <textarea
+                    rows="10"
+                    cols="50"
+                    name="textarea"
+                    value={editText}
+                    onChange={(event) =>
+                      setEditText(...editText, event.target.value)
+                    }
+                  />
+                  <button onClick={(e) => textUpdateHandler(item.id, e)}>
+                    save
+                  </button>
+                  <button onClick={() => setShowHide(false)}>close</button>
                 </Edit>
                 <div className="historySection">
                   <div className="historyText">
                     <p key={item.id}>{item.message}</p>
                   </div>
                   <div className="historyButtons">
-                    <button className="edit" onClick={() =>  showHideHandler(item.message)} >EDIT</button>
-                    <button className="delete"  onClick={(e) => deleteRow(item.id, e)}>DELETE</button>
+                    <button
+                      className="edit"
+                      onClick={() => showHideHandler(item.message)}
+                    >
+                      EDIT
+                    </button>
+                    <button
+                      className="delete"
+                      onClick={(e) => deleteRow(item.id, e)}
+                    >
+                      DELETE
+                    </button>
                   </div>
                 </div>
               </div>
