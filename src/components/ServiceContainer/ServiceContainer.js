@@ -367,7 +367,7 @@ export const ServiceContainer = (props) => {
           onStartPlayingFileUpload={onStartPlayingFileUpload}
           onStopPlayingFileUpload={onStopPlayingFileUpload}
           onStartPlayingSample={onStartPlayingSample}
-          onStopPlayingSample={onStopPlayingSample}
+          onStopPlayingSample={onStopPlayingSample} 
           time={time}
         />
         <OutputContainer
@@ -379,6 +379,8 @@ export const ServiceContainer = (props) => {
           isTranscribing={state.isTranscribing}
           keywordInfo={state.keywordInfo}
           transcriptArray={state.transcript}
+          onStartPlayingSample={onStartPlayingSample}
+          onStopPlayingSample={onStopPlayingSample} 
         />
       </div>
     </div>

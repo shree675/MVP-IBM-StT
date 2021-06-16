@@ -7,12 +7,14 @@ import TranscriptBox from '../TranscriptBox';
 export const OutputContainer = ({
   audioAnalyzer,
   audioDataArray,
-  audioDuration,
+  audioDuration, 
   audioSource,
   audioWaveContainerRef,
   isTranscribing,
   keywordInfo,
   transcriptArray,
+  onStartPlayingSample,
+  onStopPlayingSample
 }) => (
   <Tile className="output-container">
     <h3 className="container-title">Output</h3>
@@ -30,6 +32,9 @@ export const OutputContainer = ({
       <TranscriptBox
         keywordInfo={keywordInfo}
         transcriptArray={transcriptArray}
+        audioDuration={audioDuration}
+        onStartPlayingSample={onStartPlayingSample}
+        onStopPlayingSample={onStopPlayingSample}
       />
     </FormGroup>
   </Tile>

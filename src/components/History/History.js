@@ -47,6 +47,7 @@ const History = () => {
     textRef.set({
       message: editText,
     });
+    setEditText(editText);
     setShowHide(false);
   };
 

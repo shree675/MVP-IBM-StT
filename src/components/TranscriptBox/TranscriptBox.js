@@ -6,6 +6,9 @@ import { createWordRegex } from './utils';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import axios from '../../axios-submit';
 
+
+
+
 const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
   let finalSentenceArray = [];
   let matches = [];
@@ -47,6 +50,7 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
     const infoForOccurence =
       keywordInfoMatch && keywordInfoMatch[keywordOccurenceIndex];
 
+  
     if (!infoForOccurence) {
       return {};
     }
@@ -63,12 +67,14 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
   return finalSentenceArray;
 };
 
-export const TranscriptBox = ({ keywordInfo, transcriptArray }) => {
+export const TranscriptBox = ({ keywordInfo, transcriptArray , audioDuration, onStartPlayingSample, onStopPlayingSample}) => {
   let content = '';
+  let textTimeDuration='';
 
   const textSubmitHandler = () => {
     const inputText = {
       message: content,
+      timeDurartion:textTimeDuration
     };
     axios
       .post('/text.json', inputText)
@@ -105,6 +111,7 @@ export const TranscriptBox = ({ keywordInfo, transcriptArray }) => {
                       key={`transcript-text-${overallIndex}-${elementIndex}`}
                     >
                       {
+                        (textTimeDuration = audioDuration),
                         (`${element.text[element.text.length / 2]}` ===
                         undefined
                           ? null
