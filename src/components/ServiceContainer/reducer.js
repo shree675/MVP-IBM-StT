@@ -28,6 +28,7 @@ export const initialState = {
   keywordInfo: [],
   speakerLabels: [],
   transcript: [],
+  timestamps: [],
 };
 
 export const reducer = (state, action) => {

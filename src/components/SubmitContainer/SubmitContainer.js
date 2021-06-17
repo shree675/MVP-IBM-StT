@@ -142,17 +142,6 @@ export const SubmitContainer = ({
             const uploadedFile = evt.currentTarget.files[0];
             const config = await getUploadAudioConfig(uploadedFile);
 
-            // var formData = new FormData();
-            // formData.append('filename', 'My awesome file');
-            // formData.append('uploadedFile', uploadedFile);
-            // fetch('/convert', { method: 'POST', body: formData }).then(
-            //   async (e) => {
-            //     await fetch('/getfile')
-            //       .then((res) => console.log(res))
-            //       .catch((err) => console.log(err));
-            //   },
-            // );
-
             if (!config.error) {
               onStartPlayingFileUpload(config);
             }
