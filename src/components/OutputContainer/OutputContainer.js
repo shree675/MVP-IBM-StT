@@ -13,8 +13,7 @@ export const OutputContainer = ({
   isTranscribing,
   keywordInfo,
   transcriptArray,
-  onStartPlayingSample,
-  onStopPlayingSample
+  time
 }) => (
   <Tile className="output-container">
     <h3 className="container-title">Output</h3>
@@ -33,8 +32,7 @@ export const OutputContainer = ({
         keywordInfo={keywordInfo}
         transcriptArray={transcriptArray}
         audioDuration={audioDuration}
-        onStartPlayingSample={onStartPlayingSample}
-        onStopPlayingSample={onStopPlayingSample}
+        time={time}
       />
     </FormGroup>
   </Tile>

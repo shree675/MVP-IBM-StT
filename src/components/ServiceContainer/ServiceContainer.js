@@ -378,9 +378,8 @@ export const ServiceContainer = (props) => {
           audioWaveContainerRef={audioWaveContainerRef}
           isTranscribing={state.isTranscribing}
           keywordInfo={state.keywordInfo}
-          transcriptArray={state.transcript}
-          onStartPlayingSample={onStartPlayingSample}
-          onStopPlayingSample={onStopPlayingSample} 
+          transcriptArray={state.transcript} 
+          time={time}
         />
       </div>
     </div>

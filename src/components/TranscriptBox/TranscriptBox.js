@@ -67,14 +67,16 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
   return finalSentenceArray;
 };
 
-export const TranscriptBox = ({ keywordInfo, transcriptArray , audioDuration, onStartPlayingSample, onStopPlayingSample}) => {
+export const TranscriptBox = ({ keywordInfo, transcriptArray , audioDuration, time}) => {
   let content = '';
   let textTimeDuration='';
+  let textTime='';
 
   const textSubmitHandler = () => {
     const inputText = {
       message: content,
-      timeDurartion:textTimeDuration
+      timeDurartion:textTimeDuration,
+      time:textTime
     };
     axios
       .post('/text.json', inputText)
@@ -112,6 +114,7 @@ export const TranscriptBox = ({ keywordInfo, transcriptArray , audioDuration, on
                     >
                       {
                         (textTimeDuration = audioDuration),
+                        (textTime = time),
                         (`${element.text[element.text.length / 2]}` ===
                         undefined
                           ? null
