@@ -24,6 +24,9 @@ export const ServiceContainer = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const audioWaveContainerRef = useRef(null);
   const [time, setTime] = useState(0);
+  // const [timestamps, setTimestamps] = useState([]);
+
+  var tmst = null;
 
   useEffect(() => {
     const audioContext = new (window.AudioContext ||
@@ -38,7 +41,7 @@ export const ServiceContainer = (props) => {
       audioContext,
       type: actionTypes.setAudioContext,
     });
-  }, []);
+  }, [tmst]);
 
   const parseResults = (data) => {
     if (data.speaker_labels) {
@@ -47,12 +50,28 @@ export const ServiceContainer = (props) => {
         type: actionTypes.setSpeakerLabels,
       });
     } else {
-      const { transcript, keywordInfo, resultIndex } = formatStreamData(data);
+      const {
+        transcript,
+        keywordInfo,
+        resultIndex,
+        timestamps,
+      } = formatStreamData(data);
+
+      // console.log(data.results[0].alternatives[0].timestamps);
+
+      // console.log(timestamps);
+
+      // tmst = data.results[0].alternatives[0].timestamps;
+      // setTimestamps(tmst);
+
+      // setTimestamps(data.results[0].alternatives[0].timestamps);
+      // console.log(timestamps);
 
       dispatch({
         keywordInfo,
         resultIndex,
         transcript,
+        timestamps,
         type: actionTypes.updateResults,
       });
     }
@@ -178,9 +197,13 @@ export const ServiceContainer = (props) => {
     stream
       .on('data', (data) => {
         parseResults(data);
+        // console.log(state.timestamp);
+        // console.log(tmst);
       })
       .on('end', () => {
         handleStreamEnd();
+        // setTimestamps(tmst);
+        // console.log(timestamps);
       })
       .on('error', () => {
         dispatch({
@@ -230,6 +253,7 @@ export const ServiceContainer = (props) => {
     cleanUpOldStreamIfNecessary();
 
     const stream = recognizeFile(recognizeConfig);
+    // console.log(stream);
     await readAudioFileForVisualization(recognizeConfig.file);
     dispatch({
       isUploadPlaying: true,
@@ -367,7 +391,7 @@ export const ServiceContainer = (props) => {
           onStartPlayingFileUpload={onStartPlayingFileUpload}
           onStopPlayingFileUpload={onStopPlayingFileUpload}
           onStartPlayingSample={onStartPlayingSample}
-          onStopPlayingSample={onStopPlayingSample} 
+          onStopPlayingSample={onStopPlayingSample}
           time={time}
         />
         <OutputContainer
@@ -380,7 +404,8 @@ export const ServiceContainer = (props) => {
           keywordInfo={state.keywordInfo}
           transcriptArray={state.transcript}
           onStartPlayingSample={onStartPlayingSample}
-          onStopPlayingSample={onStopPlayingSample} 
+          onStopPlayingSample={onStopPlayingSample}
+          timestamps={state.timestamps}
         />
       </div>
     </div>

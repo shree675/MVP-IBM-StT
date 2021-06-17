@@ -6,7 +6,7 @@ const AUDIO_VISUALIZATION_DIMENSIONS = {
   DATA_POINT_Y_OFFSET: 50,
 };
 
-const readFileToArrayBuffer = fileData => {
+const readFileToArrayBuffer = (fileData) => {
   const fileReader = new FileReader();
 
   return new Promise((resolve, reject) => {
@@ -25,14 +25,20 @@ const readFileToArrayBuffer = fileData => {
   });
 };
 
-export const formatStreamData = data => {
+export const formatStreamData = (data) => {
   const { results, result_index: resultIndex } = data;
 
   let finalKeywords = [];
   const finalTranscript = [];
   let isFinal = false;
+  let finalTimestamps = [];
 
-  results.forEach(result => {
+  // console.log(results);
+
+  finalTimestamps = results[0].alternatives[0].timestamps;
+  // console.log(finalTimestamps);
+
+  results.forEach((result) => {
     const { final } = result;
     let alternatives = null;
     let speaker = null;
@@ -57,6 +63,7 @@ export const formatStreamData = data => {
       final,
       speaker,
       text: transcript,
+      timestamps: finalTimestamps,
     });
 
     isFinal = final;
@@ -72,6 +79,7 @@ export const formatStreamData = data => {
     keywordInfo: finalKeywords,
     resultIndex,
     final: isFinal,
+    timestamps: finalTimestamps,
   };
 };
 
@@ -91,7 +99,7 @@ export const convertAudioBlobToVisualizationData = async (
   return new Promise((resolve, reject) => {
     audioCtx.decodeAudioData(
       audioArrayBuffer,
-      audioDataBuffer => {
+      (audioDataBuffer) => {
         const { duration } = audioDataBuffer;
 
         const { DATA_POINT_MARGIN } = AUDIO_VISUALIZATION_DIMENSIONS;
@@ -112,7 +120,7 @@ export const convertAudioBlobToVisualizationData = async (
           );
         }
 
-        const reducedFloatArray = chunkedAudioDataArray.map(chunk => {
+        const reducedFloatArray = chunkedAudioDataArray.map((chunk) => {
           const totalValue = chunk.reduce(
             (prevValue, currentValue) => prevValue + currentValue,
           );
