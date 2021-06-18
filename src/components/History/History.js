@@ -10,15 +10,25 @@ import './History.css';
 import Edit from '../Edit/Edit';
 var CryptoJS = require('crypto-js');
 
-const History = () => {
+const History = (props) => {
   const [message, setMessage] = useState([]);
   const [editText, setEditText] = useState('');
   const [showHide, setShowHide] = useState(false);
   const [id1, setId1] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [login, setLogin] = useState(false);
+  const [user, setUser] = useState('wait');
 
   useEffect(() => {
+    authListener();
+    // console.log(fire.auth().currentUser);
+    if (user !== null && user.email !== undefined && user.email !== null) {
+      var username = user.email;
+      username = username.slice(0, username.length - 4);
+    }
     axios
-      .get('/text.json')
+      .get(`/text/${username}.json`)
       .then((res) => {
         const fetchedMessage = [];
         for (let key in res.data) {
@@ -30,23 +40,46 @@ const History = () => {
         setMessage(fetchedMessage);
       })
       .catch((err) => console.log(err));
-    authListener();
-  }, []);
+  }, [user]);
 
   const deleteRow = (id, e) => {
-    const textRef = fire.database().ref('text').child(id);
+    if (user !== null && user.email !== undefined && user.email !== null) {
+      var username = user.email;
+      username = username.slice(0, username.length - 4);
+    }
+    const textRef = fire.database().ref(`text/${username}`).child(id);
     textRef.remove();
     const textMessage = message.filter((item) => item.id !== id);
     setMessage(textMessage);
   };
 
   const textUpdateHandler = (id, e) => {
+    if (user !== null && user.email !== undefined && user.email !== null) {
+      var username = user.email;
+      username = username.slice(0, username.length - 4);
+    }
     e.preventDefault();
-    const textRef = fire.database().ref('text').child(id1);
-    // console.log(textRef);
-    textRef.set({
-      message: editText,
+    const textRef = fire.database().ref(`text/${username}`).child(id1);
+    var timeDuration, timestamps;
+    textRef.on('value', (snapshot) => {
+      var i = 0;
+      snapshot.forEach((data) => {
+        // console.log(data.val());
+        if (i == 2) {
+          timeDuration = data.val();
+        } else if (i == 3) {
+          timestamps = data.val();
+        }
+        i++;
+      });
+      textRef.set({
+        message: editText,
+        timeDuration: timeDuration,
+        timestamps: timestamps,
+        edited: true,
+      });
     });
+
     setEditText(editText);
     setShowHide(false);
   };
@@ -61,11 +94,6 @@ const History = () => {
   //   const { name, value } = event.target;
   //   setEditText( ...editText, {[name]: value} );
   // };
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [login, setLogin] = useState(false);
-  const [user, setUser] = useState('wait');
 
   const handleLogin = (e) => {
     e.preventDefault();

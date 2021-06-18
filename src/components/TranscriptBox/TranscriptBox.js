@@ -120,21 +120,25 @@ export const TranscriptBox = ({
   onStartPlayingSample,
   onStopPlayingSample,
   timestamps,
+  username,
 }) => {
   let content = '';
   let textTimeDuration = '';
+
+  if (username !== undefined) {
+    username = username.slice(0, username.length - 4);
+  }
 
   const textSubmitHandler = () => {
     const inputText = {
       message: content,
       timeDurartion: textTimeDuration,
       timestamps: transcriptArray[0].timestamps,
+      edited: false,
     };
 
-    console.log(transcriptArray[0].timestamps);
-
     axios
-      .post('/text.json', inputText)
+      .post(`/text/${username}.json`, inputText)
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
   };

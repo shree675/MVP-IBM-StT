@@ -98,7 +98,7 @@ const HomePage = () => {
       {user === 'wait' ? (
         <div></div>
       ) : user !== null ? (
-        <ServiceContainer handleLogout={handleLogout} />
+        <ServiceContainer handleLogout={handleLogout} username={user.email} />
       ) : (
         <LoginPage
           login={login}

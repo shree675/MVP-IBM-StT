@@ -26,8 +26,6 @@ export const ServiceContainer = (props) => {
   const [time, setTime] = useState(0);
   // const [timestamps, setTimestamps] = useState([]);
 
-  var tmst = null;
-
   useEffect(() => {
     const audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();
@@ -41,7 +39,7 @@ export const ServiceContainer = (props) => {
       audioContext,
       type: actionTypes.setAudioContext,
     });
-  }, [tmst]);
+  }, []);
 
   const parseResults = (data) => {
     if (data.speaker_labels) {
@@ -406,6 +404,7 @@ export const ServiceContainer = (props) => {
           onStartPlayingSample={onStartPlayingSample}
           onStopPlayingSample={onStopPlayingSample}
           timestamps={state.timestamps}
+          username={props.username}
         />
       </div>
     </div>

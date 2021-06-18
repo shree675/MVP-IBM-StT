@@ -16,6 +16,7 @@ export const OutputContainer = ({
   onStartPlayingSample,
   onStopPlayingSample,
   timestamps,
+  username,
 }) => (
   <Tile className="output-container">
     <h3 className="container-title">Output</h3>
@@ -37,6 +38,7 @@ export const OutputContainer = ({
         onStartPlayingSample={onStartPlayingSample}
         onStopPlayingSample={onStopPlayingSample}
         timestamps={timestamps}
+        username={username}
       />
     </FormGroup>
   </Tile>
