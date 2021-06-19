@@ -7,9 +7,9 @@ const app = express();
 require('./config/express')(app);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'build')));
+  app.use(express.static(path.join(__dirname, 'public')));
   app.get('*', (req, res) => {
-    res.sendFile(path.join((__dirname = 'build/index.html')));
+    res.sendFile(path.join((__dirname = 'public/index.html')));
   });
 }
 
@@ -111,8 +111,12 @@ const getToken = async () => {
 };
 
 app.get('/', (_, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+// app.get('/', (_, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 app.use(cors());
 
