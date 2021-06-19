@@ -6,12 +6,12 @@ var cors = require('cors');
 const app = express();
 require('./config/express')(app);
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, 'build')));
-//   app.get('*', (req, res) => {
-//     res.sendFile(path.join((__dirname = 'build/index.html')));
-//   });
-// }
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join((__dirname = 'build/index.html')));
+  });
+}
 
 // For starter kit env.
 require('dotenv').config({
@@ -110,13 +110,13 @@ const getToken = async () => {
   return tokenResponse;
 };
 
-// app.get('/', (_, res) => {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
+app.get('/', (_, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.use(cors());
 
-app.use(express.static('src/index.js'));
+// app.use(express.static('src/index.js'));
 
 // app.get('/getfile', (_, res) => {
 //   // fs.readFile('src/uploads/outputaudio.wav', (err, data) => {
