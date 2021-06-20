@@ -6,19 +6,7 @@ import { createWordRegex } from './utils';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import axios from '../../axios-submit';
 
-var list = [];
-var t = 0;
-
 const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
-  // var d = new Date();
-  // if (list.length === 0) {
-  //   t = d.getTime();
-  // }
-  // console.log(text);
-  // list.push(d.getTime() - t);
-  // console.log(list);
-
-  // console.log(keywordInfo);
   let finalSentenceArray = [];
   let matches = [];
 
@@ -26,16 +14,6 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
     const regex = createWordRegex(keywordInfo);
     matches = text.split(regex);
   }
-  // else {
-  //   var str = '';
-  //   for (var i = 0; i < text.length; i++) {
-  //     str += text[i];
-  //   }
-  //   // const regex = createWordRegex(keywordInfo);
-  //   matches = str.split(' ');
-  //   keywordInfo = matches;
-  //   // console.log(matches);
-  // }
 
   if (matches.length === 0) {
     return [
@@ -49,7 +27,6 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
   const wordOccurences = {};
   finalSentenceArray = matches.map((sentenceFragment, index) => {
     const fragmentToSearch = sentenceFragment.toLowerCase();
-    // console.log(fragmentToSearch);
 
     if (index % 2 === 0) {
       return {
@@ -58,12 +35,8 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
       };
     }
 
-    // console.log(totalIndex);
-
     const keywordInfoMatch =
       keywordInfo[totalIndex] && keywordInfo[totalIndex][fragmentToSearch];
-
-    // console.log(keywordInfoMatch);
 
     let keywordOccurenceIndex = 0;
     if (wordOccurences[fragmentToSearch]) {
@@ -74,28 +47,6 @@ const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
     }
     const infoForOccurence =
       keywordInfoMatch && keywordInfoMatch[keywordOccurenceIndex];
-
-    // console.log(infoForOccurence.start_time);
-    // console.log(infoForOccurence.end_time);
-
-    // const keywordInfoMatch = keywordInfo;
-
-    // console.log(keywordInfo);
-
-    // let keywordOccurenceIndex = 0;
-    // if (wordOccurences[fragmentToSearch]) {
-    //   keywordOccurenceIndex = wordOccurences[fragmentToSearch];
-    //   wordOccurences[fragmentToSearch] += 1;
-    // } else {
-    //   wordOccurences[fragmentToSearch] = 1;
-    // }
-    // const infoForOccurence =
-    //   keywordInfoMatch && keywordInfoMatch[keywordOccurenceIndex];
-
-    // console.log(keywordInfoMatch[keywordOccurenceIndex]);
-
-    // console.log(infoForOccurence.start_time);
-    // console.log(infoForOccurence.end_time);
 
     if (!infoForOccurence) {
       return {};
@@ -125,7 +76,7 @@ export const TranscriptBox = ({
   let content = '';
   let textTimeDuration = '';
 
-  if (username !== undefined) {
+  if (username !== undefined && username !== null) {
     username = username.slice(0, username.length - 4);
   }
 

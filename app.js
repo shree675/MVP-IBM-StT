@@ -111,12 +111,17 @@ const getToken = async () => {
 };
 
 // app.get('/', (_, res) => {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 // });
+
+app.get('/', (_, res) => {
+  app.use(express.static('src/index.js'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.use(cors());
 
-app.use(express.static('src/index.js'));
+// app.use(express.static('src/index.js'));
 
 // app.get('/getfile', (_, res) => {
 //   // fs.readFile('src/uploads/outputaudio.wav', (err, data) => {
