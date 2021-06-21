@@ -22,10 +22,12 @@ const History = (props) => {
 
   useEffect(() => {
     authListener();
-    // console.log(fire.auth().currentUser);
-    if (user !== null && user.email !== undefined && user.email !== null) {
-      var username = user.email;
-      username = username.slice(0, username.length - 4);
+    if (fire.auth().currentUser !== null) {
+      console.log(fire.auth().currentUser.uid);
+    }
+    // console.log(user);
+    if (user !== null && user.uid !== undefined && user.uid !== null) {
+      var username = user.uid;
     }
     axios
       .get(`/text/${username}.json`)
@@ -43,9 +45,8 @@ const History = (props) => {
   }, [user]);
 
   const deleteRow = (id, e) => {
-    if (user !== null && user.email !== undefined && user.email !== null) {
-      var username = user.email;
-      username = username.slice(0, username.length - 4);
+    if (user !== null && user.uid !== undefined && user.uid !== null) {
+      var username = user.uid;
     }
     const textRef = fire.database().ref(`text/${username}`).child(id);
     textRef.remove();
@@ -54,9 +55,8 @@ const History = (props) => {
   };
 
   const textUpdateHandler = (id, e) => {
-    if (user !== null && user.email !== undefined && user.email !== null) {
-      var username = user.email;
-      username = username.slice(0, username.length - 4);
+    if (user !== null && user.uid !== undefined && user.uid !== null) {
+      var username = user.uid;
     }
     e.preventDefault();
     const textRef = fire.database().ref(`text/${username}`).child(id1);
@@ -142,7 +142,6 @@ const History = (props) => {
   };
 
   const handleLogout = (e) => {
-    // e.preventDefault();
     fire.auth().signOut();
     authListener();
   };

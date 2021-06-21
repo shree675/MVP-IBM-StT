@@ -73,6 +73,7 @@ const HomePage = (props) => {
         setUser(null);
       }
     });
+    // console.log(user.email);
   };
 
   const clearAll = () => {
@@ -96,9 +97,8 @@ const HomePage = (props) => {
     if (window.performance) {
       if (performance.navigation.type == 1) {
         setRefresh(true);
-      } 
+      }
     }
-
   }, []);
 
   return (
@@ -106,7 +106,7 @@ const HomePage = (props) => {
       {user === 'wait' ? (
         <div></div>
       ) : user !== null ? (
-        <ServiceContainer handleLogout={handleLogout} username={user.email} />
+        <ServiceContainer handleLogout={handleLogout} username={user.uid} />
       ) : (
         <LoginPage
           login={login}

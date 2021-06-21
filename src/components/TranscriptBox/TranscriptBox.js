@@ -5,6 +5,7 @@ import KeywordTooltip from '../KeywordTooltip';
 import { createWordRegex } from './utils';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import axios from '../../axios-submit';
+import fire from '../../firebase';
 
 const mapTranscriptTextToElements = (text, keywordInfo, totalIndex) => {
   let finalSentenceArray = [];
@@ -77,10 +78,6 @@ export const TranscriptBox = ({
   let content = [];
   let textTimeDuration = '';
 
-  if (username !== undefined && username !== null) {
-    username = username.slice(0, username.length - 4);
-  }
-
   const textSubmitHandler = () => {
     onStopPlayingSample();
     onStopPlayingFileUpload();
@@ -93,15 +90,12 @@ export const TranscriptBox = ({
     };
 
     axios
-      .post(`/text/${username}.json`, inputText)
+      .post(`/text/${fire.auth().currentUser.uid}.json`, inputText)
       .then((response) => {
         window.location.href = '/';
       })
       .catch((error) => console.log(error));
   };
-
-  // const stopPlay = () => {
-  // };
 
   return (
     <div>
@@ -150,9 +144,7 @@ export const TranscriptBox = ({
         })}
       </div>
       <div className="buttonBox">
-        {/* <Link to="/"> */}
         <button onClick={textSubmitHandler}>Save</button>
-        {/* </Link> */}
       </div>
     </div>
   );
