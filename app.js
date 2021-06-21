@@ -119,7 +119,7 @@ app.get('/', (_, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.get('/servicecontainer', (req,res) => {
+app.get('/servicecontainer', (req, res) => {
   app.use(express.static('src/index.js'));
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

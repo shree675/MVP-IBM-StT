@@ -338,59 +338,6 @@ export const ServiceContainer = (props) => {
     stopPlay();
   };
 
-  // window.onload = (e) => {
-  //   // e.preventDefault();
-  //   console.log('load');
-  //   // window.stop();
-
-  //   // window.location = '/';
-  // window.location.href = '/';
-  // document.getElementById('stop').click();
-
-  //   // document.getElementById('stop').click();
-  // };
-  window.onbeforeunload = function (event) {
-    event.returnValue =
-      'Dude, are you sure you want to leave? Think of the kittens!';
-    // document.getElementById('stop').click();
-    window.location.href = '/';
-  };
-
-  window.addEventListener('beforeunload', function (e) {
-    e.preventDefault(); // firefox
-    e.returnValue = ''; // Chrome
-    // document.getElementById('stop').click();
-    window.location.href = '/';
-  });
-
-  // window.onbeforeunload = (e) => {
-  //   // e.preventDefault();
-  //   e.returnValue = 'hello';
-  //   // e.stopImmediatePropagation();
-  //   console.log('before unload');
-  //   // window.stop();
-  //   document.getElementById('stop').click();
-
-  //   window.onbeforeunload = false;
-  //   return null;
-  //   window.location.href = '/';
-  //   window.stop();
-  // };
-
-  // window.onloadeddata = (e) => {
-  //   document.getElementById('stop').click();
-  // };
-
-  // window.onunload = (e) => {
-  //   e.preventDefault();
-  //   console.log('r');
-  //   alert('hello');
-
-  //   // window.location = '/';
-  //   document.getElementById('stop').click();
-  //   window.location.href = '/';
-  // };
-
   return (
     <div>
       <button

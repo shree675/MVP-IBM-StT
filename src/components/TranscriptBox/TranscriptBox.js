@@ -82,7 +82,7 @@ export const TranscriptBox = ({
 
   const textSubmitHandler = () => {
     const inputText = {
-      message: content,
+      message: transcriptArray[0].text,
       timeDurartion: textTimeDuration,
       timestamps: transcriptArray[0].timestamps,
       edited: false,
@@ -120,15 +120,15 @@ export const TranscriptBox = ({
                 if (element.type === 'normal') {
                   return (
                     <span
+                      id="content-box"
                       key={`transcript-text-${overallIndex}-${elementIndex}`}
                     >
                       {
                         ((textTimeDuration = audioDuration),
-                        (`${element.text[element.text.length / 2]}` ===
-                        undefined
+                        `${element.text[element.text.length / 2]}` === undefined
                           ? null
                           : `${element.text[element.text.length / 2]}`,
-                        (content = element.text)))
+                        (content = element.text))
                       }
                     </span>
                   );
@@ -141,7 +141,13 @@ export const TranscriptBox = ({
         })}
       </div>
       <div className="buttonBox">
-        <button onClick={textSubmitHandler}>Save</button>
+        <button
+          onClick={() => {
+            textSubmitHandler();
+          }}
+        >
+          Save
+        </button>
       </div>
     </div>
   );
