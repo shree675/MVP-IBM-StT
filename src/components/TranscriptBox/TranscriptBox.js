@@ -94,7 +94,9 @@ export const TranscriptBox = ({
 
     axios
       .post(`/text/${username}.json`, inputText)
-      .then((response) => console.log(response))
+      .then((response) => {
+        window.location.href = '/';
+      })
       .catch((error) => console.log(error));
   };
 
@@ -148,13 +150,9 @@ export const TranscriptBox = ({
         })}
       </div>
       <div className="buttonBox">
-        <button
-          onClick={() => {
-            textSubmitHandler();
-          }}
-        >
-          Save
-        </button>
+        {/* <Link to="/"> */}
+        <button onClick={textSubmitHandler}>Save</button>
+        {/* </Link> */}
       </div>
     </div>
   );

@@ -178,7 +178,7 @@ const History = (props) => {
         <div></div>
       ) : user !== null ? (
         <div style={{ position: 'relative' }}>
-          <h1>history</h1>
+          <h1>Dashboard</h1>
           <br></br>
           <button onClick={handleLogout}>Logout</button>
           <h3>List of translations</h3>
