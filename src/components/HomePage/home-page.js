@@ -6,11 +6,12 @@ import ServiceContainer from '../ServiceContainer/ServiceContainer';
 import LoginPage from '../LoginPage/login-page';
 var CryptoJS = require('crypto-js');
 
-const HomePage = () => {
+const HomePage = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState('wait');
+  const [refresh, setRefresh] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -91,6 +92,13 @@ const HomePage = () => {
 
   useEffect(() => {
     authListener();
+
+    if (window.performance) {
+      if (performance.navigation.type == 1) {
+        setRefresh(true);
+      } 
+    }
+
   }, []);
 
   return (
