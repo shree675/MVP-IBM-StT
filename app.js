@@ -115,20 +115,13 @@ const getToken = async () => {
 // });
 
 app.get('/', (_, res) => {
-  app.use(express.static('src/index.js'));
+  // app.use(express.static('src/index.js'));
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.use(cors());
 
 // app.use(express.static('src/index.js'));
-
-// app.get('/getfile', (_, res) => {
-//   // fs.readFile('src/uploads/outputaudio.wav', (err, data) => {
-//   //   console.log(data);
-//   //   res.send(data);
-//   // });
-// });
 
 app.get('/health', (_, res) => {
   res.json({ status: 'UP' });
