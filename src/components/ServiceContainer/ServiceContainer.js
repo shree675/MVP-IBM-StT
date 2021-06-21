@@ -403,6 +403,7 @@ export const ServiceContainer = (props) => {
           transcriptArray={state.transcript}
           onStartPlayingSample={onStartPlayingSample}
           onStopPlayingSample={onStopPlayingSample}
+          onStopPlayingFileUpload={onStopPlayingFileUpload}
           timestamps={state.timestamps}
           username={props.username}
         />

@@ -70,10 +70,11 @@ export const TranscriptBox = ({
   audioDuration,
   onStartPlayingSample,
   onStopPlayingSample,
+  onStopPlayingFileUpload,
   timestamps,
   username,
 }) => {
-  let content = '';
+  let content = [];
   let textTimeDuration = '';
 
   if (username !== undefined && username !== null) {
@@ -81,6 +82,9 @@ export const TranscriptBox = ({
   }
 
   const textSubmitHandler = () => {
+    onStopPlayingSample();
+    onStopPlayingFileUpload();
+
     const inputText = {
       message: transcriptArray[0].text,
       timeDurartion: textTimeDuration,
@@ -93,6 +97,9 @@ export const TranscriptBox = ({
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
   };
+
+  // const stopPlay = () => {
+  // };
 
   return (
     <div>

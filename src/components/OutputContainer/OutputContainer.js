@@ -15,6 +15,7 @@ export const OutputContainer = ({
   transcriptArray,
   onStartPlayingSample,
   onStopPlayingSample,
+  onStopPlayingFileUpload,
   timestamps,
   username,
 }) => (
@@ -37,6 +38,7 @@ export const OutputContainer = ({
         audioDuration={audioDuration}
         onStartPlayingSample={onStartPlayingSample}
         onStopPlayingSample={onStopPlayingSample}
+        onStopPlayingFileUpload={onStopPlayingFileUpload}
         timestamps={timestamps}
         username={username}
       />
