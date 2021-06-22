@@ -155,7 +155,6 @@ export const TranscriptBox = ({
       color2: color2,
       imageurl: imageurl,
       // audioFile: window.audio,           // not working
-      audioFile: '',
     };
 
     axios
