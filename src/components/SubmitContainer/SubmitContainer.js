@@ -17,7 +17,7 @@ export const SubmitContainer = ({
   keywordText,
   modelName,
   onError,
-  onStartPlayingFileUpload,
+  onStartPlayingFileUpload, 
   onStopPlayingFileUpload,
   onStartPlayingSample,
   onStopPlayingSample,

@@ -112,7 +112,7 @@
     "keywords": "ご住所, ご本人, 生年月日",
     "supported_features": {
       "custom_language_model": true,
-      "speaker_labels": true
+      "speaker_labels": true 
     },
     "description": "Japanese (8khz Narrowband)"
   },

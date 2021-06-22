@@ -12,7 +12,7 @@ import models from '../../data/models.json';
 
 export const ControlContainer = ({
   isRecording,
-  isSamplePlaying,
+  isSamplePlaying, 
   isUploadPlaying,
   onError,
   onSelectNewModel,
