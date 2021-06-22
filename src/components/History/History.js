@@ -58,14 +58,12 @@ const History = (props) => {
       var username = user.uid;
     }
     e.preventDefault();
-    const textRef = fire.database().ref(`text/${username}/${id}`).child(id);
-    var timeDuration, timestamps, audioFile, name, t1, t2, c1, c2, imageurl;
+    const textRef = fire.database().ref(`text/${username}`).child(id);
+    var timeDuration, timestamps, name, t1, t2, c1, c2, imageurl;
     textRef.on('value', (snapshot) => {
-      var i = 0;
+      var i = 1;
       snapshot.forEach((data) => {
-        if (i == 0) {
-          audioFile = data.val();
-        } else if (i == 1) {
+        if (i == 1) {
           c1 = data.val();
         } else if (i == 2) {
           c2 = data.val();
@@ -86,6 +84,15 @@ const History = (props) => {
       });
       textRef.set({
         message: editText,
+        timeDurartion: timeDuration,
+        timestamps: timestamps,
+        edited: true,
+        name: name,
+        title1: t1,
+        title2: t2,
+        color1: c1,
+        color2: c2,
+        imageurl: imageurl,
       });
     });
 
@@ -233,12 +240,10 @@ const History = (props) => {
                       </div>
                       <hr></hr>
                       <div>TRANSCRIPT:</div>
-                      <div>{item.id.message}</div>
+                      <div>{item.message}</div>
                       <button
                         className="edit"
-                        onClick={() =>
-                          showHideHandler(item.id.message, item.id)
-                        }
+                        onClick={() => showHideHandler(item.message, item.id)}
                       >
                         EDIT
                       </button>
