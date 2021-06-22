@@ -243,11 +243,11 @@ const History = (props) => {
                           Word: {item.timestamps[item.timestamps.length - 1][0]}
                         </div>
                         <div>
-                          Start Time:{' '}
+                          Start Time:
                           {item.timestamps[item.timestamps.length - 1][1]}
                         </div>
                         <div>
-                          End Time:{' '}
+                          End Time:
                           {item.timestamps[item.timestamps.length - 1][2]}
                         </div>
                       </div>
