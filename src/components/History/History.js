@@ -85,11 +85,9 @@ const History = (props) => {
         i++;
       });
       textRef.set({
-        message: editText
+        message: editText,
       });
     });
-
-    
 
     setEditText(editText);
     setShowHide(false);
@@ -181,7 +179,7 @@ const History = (props) => {
     e.preventDefault();
     setPassword(e.target.value);
   };
-let idt="";
+  let idt = '';
   return (
     <div>
       {user === 'wait' ? (
@@ -215,25 +213,35 @@ let idt="";
                       <div>{item.name === '' ? '(not filled)' : item.name}</div>
                       <hr></hr>
                       <div>TITLE 1:</div>
-                      <div>{item.title1}</div>
+                      <div>
+                        {item.title1 === '' ? '(not filled)' : item.title1}
+                      </div>
                       <hr></hr>
                       <div>TITLE 2:</div>
-                      <div>{item.title2}</div>
+                      <div>
+                        {item.title2 === '' ? '(not filled)' : item.title2}
+                      </div>
                       <hr></hr>
                       <div>COLOR 1:</div>
-                      <div>{item.color1}</div>
+                      <div>
+                        {item.color1 === '' ? '(not filled)' : item.color1}
+                      </div>
                       <hr></hr>
                       <div>COLOR 2:</div>
-                      <div>{item.color2}</div>
+                      <div>
+                        {item.color2 === '' ? '(not filled)' : item.color2}
+                      </div>
                       <hr></hr>
                       <div>TRANSCRIPT:</div>
                       <div>{item.id.message}</div>
                       <button
-                      className="edit"
-                      onClick={() => showHideHandler(item.id.message, item.id)}
-                    >
-                      EDIT
-                    </button>
+                        className="edit"
+                        onClick={() =>
+                          showHideHandler(item.id.message, item.id)
+                        }
+                      >
+                        EDIT
+                      </button>
                       <hr></hr>
                       <div>LAST TIMESTAMP:</div>
                       <div>
@@ -258,7 +266,6 @@ let idt="";
                   </div>
 
                   <div className="historyButtons">
-                   
                     <button
                       className="delete"
                       onClick={(e) => deleteRow(item.id, e)}
