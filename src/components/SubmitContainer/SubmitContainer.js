@@ -25,13 +25,14 @@ export const SubmitContainer = ({
   time,
 }) => {
   const [keywordList, setKeywordList] = useState([]);
+  const [audiofile, setAudioFile] = useState(null);
   useEffect(() => {
     let newKeywordList = [];
     if (keywordText.length > 0) {
       newKeywordList = keywordText.split(',').map((k) => k.trim());
     }
     setKeywordList(newKeywordList);
-  }, [keywordText]);
+  }, [keywordText, audiofile]);
 
   const sampleModelInfo = models.find((model) => model.name === modelName);
   const sampleModelFilename = sampleModelInfo ? sampleModelInfo.filename : null;
@@ -108,6 +109,7 @@ export const SubmitContainer = ({
           onClick={async () => {
             const config = await getSampleAudioConfig();
             if (!config.error) {
+              // setAudioFile()
               onStartPlayingSample(config);
             }
           }}
@@ -143,6 +145,8 @@ export const SubmitContainer = ({
             const config = await getUploadAudioConfig(uploadedFile);
 
             if (!config.error) {
+              setAudioFile(uploadedFile);
+              window.audio = uploadedFile;
               onStartPlayingFileUpload(config);
             }
           }}

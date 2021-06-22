@@ -1,25 +1,27 @@
-.historySection{
-    display: flex;
-    border: solid 1px;
-    width: 70%;
-    margin-left: 10%;
-    margin-bottom: 20px;
+.historySection {
+  /* display: flex; */
+  border: solid 1px;
+  width: 70%;
+  margin-left: 10%;
+  margin-bottom: 20px;
 }
 
-.historyText{
-    flex:.8;
+/* .historyText {
+  flex:.8;
+} */
+
+.historyButtons {
+  display: flex;
+  flex-direction: column;
+  flex: 0.2;
+  /* float: right; */
+  width: fit-content;
 }
 
-.historyButtons{
-    display: flex;
-    flex-direction: column;
-    flex:.2;
+.edit {
+  margin: 5px;
 }
 
-.edit{
-    margin: 5px;
-}
-
-.delete{
-    margin: 5px;
+.delete {
+  margin: 5px;
 }

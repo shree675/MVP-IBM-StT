@@ -119,7 +119,12 @@ app.get('/', (_, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.get('/servicecontainer', (req,res) => {
+app.get('/servicecontainer', (req, res) => {
+  app.use(express.static('src/index.js'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+app.get('/details', (req, res) => {
   app.use(express.static('src/index.js'));
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
@@ -127,13 +132,6 @@ app.get('/servicecontainer', (req,res) => {
 app.use(cors());
 
 // app.use(express.static('src/index.js'));
-
-// app.get('/getfile', (_, res) => {
-//   // fs.readFile('src/uploads/outputaudio.wav', (err, data) => {
-//   //   console.log(data);
-//   //   res.send(data);
-//   // });
-// });
 
 app.get('/health', (_, res) => {
   res.json({ status: 'UP' });
