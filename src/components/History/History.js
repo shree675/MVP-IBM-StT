@@ -58,7 +58,7 @@ const History = (props) => {
       var username = user.uid;
     }
     e.preventDefault();
-    const textRef = fire.database().ref(`text/${username}`).child(id1);
+    const textRef = fire.database().ref(`text/${username}/${id}`).child(id);
     var timeDuration, timestamps, audioFile, name, t1, t2, c1, c2, imageurl;
     textRef.on('value', (snapshot) => {
       var i = 0;
@@ -85,19 +85,11 @@ const History = (props) => {
         i++;
       });
       textRef.set({
-        message: editText,
-        timeDuration: timeDuration,
-        timestamps: timestamps,
-        edited: true,
-        name: name,
-        title1: t1,
-        title2: t2,
-        color1: c1,
-        color2: c2,
-        audioFile: audioFile,
-        imageurl: imageurl,
+        message: editText
       });
     });
+
+    
 
     setEditText(editText);
     setShowHide(false);
@@ -189,7 +181,7 @@ const History = (props) => {
     e.preventDefault();
     setPassword(e.target.value);
   };
-
+let idt="";
   return (
     <div>
       {user === 'wait' ? (
@@ -235,7 +227,13 @@ const History = (props) => {
                       <div>{item.color2}</div>
                       <hr></hr>
                       <div>TRANSCRIPT:</div>
-                      <div>{item.message}</div>
+                      <div>{item.id.message}</div>
+                      <button
+                      className="edit"
+                      onClick={() => showHideHandler(item.id.message, item.id)}
+                    >
+                      EDIT
+                    </button>
                       <hr></hr>
                       <div>LAST TIMESTAMP:</div>
                       <div>
@@ -260,12 +258,7 @@ const History = (props) => {
                   </div>
 
                   <div className="historyButtons">
-                    <button
-                      className="edit"
-                      onClick={() => showHideHandler(item.message, item.id)}
-                    >
-                      EDIT
-                    </button>
+                   
                     <button
                       className="delete"
                       onClick={(e) => deleteRow(item.id, e)}
