@@ -25,8 +25,6 @@ export const ServiceContainer = (props) => {
   const audioWaveContainerRef = useRef(null);
   const [time, setTime] = useState(0);
 
-  console.log(props.username);
-
   useEffect(() => {
     const audioContext = new (window.AudioContext ||
       window.webkitAudioContext)();

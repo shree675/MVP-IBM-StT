@@ -8,9 +8,15 @@ import LogoGithub24 from '@carbon/icons-react/lib/logo--github/24';
 import Header from './components/Header';
 import ServiceContainer from './components/ServiceContainer';
 import useScript from './hooks/useScript';
-import { BrowserRouter as Router, Switch, Route,Redirect } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import History from './components/History/History';
 import HomePage from './components/HomePage/home-page';
+import Details from './components/Details/details-page';
 
 export const App = () => {
   useScript(
@@ -22,7 +28,7 @@ export const App = () => {
       <div className="app-container">
         <Switch>
           <Route exact path="/" component={History}></Route>
-          <Route exact path="/history" component={History} />
+          <Route exact path="/details" component={Details} />
           <Route exact path="/servicecontainer" component={HomePage} />
         </Switch>
       </div>

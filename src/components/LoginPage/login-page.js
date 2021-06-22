@@ -7,13 +7,10 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-
 import { Link } from 'react-router-dom';
 import fire from '../../firebase';
 import firebase from 'firebase';
 import { makeStyles } from '@material-ui/core/styles';
-// const bcrypt = require("bcrypt");
-// import wave from './wave.svg';
 import './login-page.css';
 import google from '../../assets/google.svg';
 import twitter from '../../assets/twitter.svg';

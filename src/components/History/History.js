@@ -22,10 +22,9 @@ const History = (props) => {
 
   useEffect(() => {
     authListener();
-    if (fire.auth().currentUser !== null) {
-      console.log(fire.auth().currentUser.uid);
-    }
-    // console.log(user);
+    // if (fire.auth().currentUser !== null) {
+    //   console.log(fire.auth().currentUser.uid);
+    // }
     if (user !== null && user.uid !== undefined && user.uid !== null) {
       var username = user.uid;
     }
@@ -60,14 +59,27 @@ const History = (props) => {
     }
     e.preventDefault();
     const textRef = fire.database().ref(`text/${username}`).child(id1);
-    var timeDuration, timestamps;
+    var timeDuration, timestamps, audioFile, name, t1, t2, c1, c2, imageurl;
     textRef.on('value', (snapshot) => {
       var i = 0;
       snapshot.forEach((data) => {
-        // console.log(data.val());
-        if (i == 2) {
+        if (i == 0) {
+          audioFile = data.val();
+        } else if (i == 1) {
+          c1 = data.val();
+        } else if (i == 2) {
+          c2 = data.val();
+        } else if (i == 4) {
+          imageurl = data.val();
+        } else if (i == 6) {
+          name = data.val();
+        } else if (i == 9) {
+          t1 = data.val();
+        } else if (i == 10) {
+          t2 = data.val();
+        } else if (i == 7) {
           timeDuration = data.val();
-        } else if (i == 3) {
+        } else if (i == 8) {
           timestamps = data.val();
         }
         i++;
@@ -77,6 +89,13 @@ const History = (props) => {
         timeDuration: timeDuration,
         timestamps: timestamps,
         edited: true,
+        name: name,
+        title1: t1,
+        title2: t2,
+        color1: c1,
+        color2: c2,
+        audioFile: audioFile,
+        imageurl: imageurl,
       });
     });
 
@@ -199,8 +218,47 @@ const History = (props) => {
                 </Edit>
                 <div className="historySection">
                   <div className="historyText">
-                    <p key={item.id}>{item.message}</p>
+                    <p key={item.id}>
+                      <div>NAME:</div>
+                      <div>{item.name === '' ? '(not filled)' : item.name}</div>
+                      <hr></hr>
+                      <div>TITLE 1:</div>
+                      <div>{item.title1}</div>
+                      <hr></hr>
+                      <div>TITLE 2:</div>
+                      <div>{item.title2}</div>
+                      <hr></hr>
+                      <div>COLOR 1:</div>
+                      <div>{item.color1}</div>
+                      <hr></hr>
+                      <div>COLOR 2:</div>
+                      <div>{item.color2}</div>
+                      <hr></hr>
+                      <div>TRANSCRIPT:</div>
+                      <div>{item.message}</div>
+                      <hr></hr>
+                      <div>LAST TIMESTAMP:</div>
+                      <div>
+                        <div>
+                          Word: {item.timestamps[item.timestamps.length - 1][0]}
+                        </div>
+                        <div>
+                          Start Time:{' '}
+                          {item.timestamps[item.timestamps.length - 1][1]}
+                        </div>
+                        <div>
+                          End Time:{' '}
+                          {item.timestamps[item.timestamps.length - 1][2]}
+                        </div>
+                      </div>
+                      <hr></hr>
+                      <div>IMAGE:</div>
+                      <div>
+                        <img src={item.imageurl} width="200"></img>
+                      </div>
+                    </p>
                   </div>
+
                   <div className="historyButtons">
                     <button
                       className="edit"
