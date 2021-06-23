@@ -93,6 +93,8 @@ export const TranscriptBox = ({
   const [imageurl, setImageURL] = useState('');
   const [image, setImage] = useState('');
   const [audiourl, setAudioURL] = useState('');
+  const [transcript, setTranscript] = useState('');
+  const [timestamps2, setTimestamps] = useState('');
 
   const onChangeT1 = (e) => {
     setTitle1(e.target.value);
@@ -182,6 +184,13 @@ export const TranscriptBox = ({
       .catch((error) => console.log(error));
   };
 
+  useEffect(() => {
+    if (transcriptArray[0]) {
+      setTranscript(transcriptArray[0].text);
+      setTimestamps(transcriptArray[0].timestamps);
+    }
+  }, [transcriptArray]);
+
   const newTo = {
     pathname: '/details',
     name: name,
@@ -192,6 +201,8 @@ export const TranscriptBox = ({
     imageurl: imageurl,
     image: image,
     textSubmitHandler: textSubmitHandler,
+    timestamps: timestamps2,
+    transcript: transcript,
   };
 
   return (

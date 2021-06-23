@@ -119,15 +119,37 @@ const Details = (props) => {
       ) : user !== null ? (
         <div>
           <h5>Name</h5>
-          <p>{name}</p>
+          <p>{name === '' ? '(not-filled)' : name}</p>
+          <br></br>
           <h5>Title1</h5>
-          <p>{title1}</p>
+          <p>{title1 === '' ? '(not-filled)' : title1}</p>
+          <br></br>
           <h5>Title2</h5>
-          <p>{title2}</p>
+          <p>{title2 === '' ? '(not-filled)' : title2}</p>
+          <br></br>
           <h5>Color1</h5>
-          <p>{color1}</p>
+          <p>{color1 === '' ? '(not-filled)' : color1}</p>
+          <br></br>
           <h5>Color2</h5>
-          <p>{color2}</p>
+          <p>{color2 === '' ? '(not-filled)' : color2}</p>
+          <br></br>
+          <h5>Transcript</h5>
+          <p>{props.location.transcript}</p>
+          <br></br>
+          <h5>Last Timestamp</h5>
+          <p>
+            Word:{' '}
+            {props.location.timestamps[props.location.timestamps.length - 1][0]}
+          </p>
+          <p>
+            Start Time:
+            {props.location.timestamps[props.location.timestamps.length - 1][1]}
+          </p>
+          <p>
+            End Time:
+            {props.location.timestamps[props.location.timestamps.length - 1][2]}
+          </p>
+          <br></br>
           <h5>Image</h5>
           <p id="output">
             <img width="200" src={imageurl}></img>
