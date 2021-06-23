@@ -26,6 +26,7 @@ export const SubmitContainer = ({
 }) => {
   const [keywordList, setKeywordList] = useState([]);
   const [audiofile, setAudioFile] = useState(null);
+
   useEffect(() => {
     let newKeywordList = [];
     if (keywordText.length > 0) {
@@ -109,7 +110,8 @@ export const SubmitContainer = ({
           onClick={async () => {
             const config = await getSampleAudioConfig();
             if (!config.error) {
-              // setAudioFile()
+              window.audio = config.file;
+              setAudioFile(config.file);
               onStartPlayingSample(config);
             }
           }}

@@ -59,11 +59,13 @@ const History = (props) => {
     }
     e.preventDefault();
     const textRef = fire.database().ref(`text/${username}`).child(id);
-    var timeDuration, timestamps, name, t1, t2, c1, c2, imageurl;
+    var timeDuration, timestamps, name, t1, t2, c1, c2, imageurl, audiourl;
     textRef.on('value', (snapshot) => {
-      var i = 1;
+      var i = 0;
       snapshot.forEach((data) => {
-        if (i == 1) {
+        if (i == 0) {
+          audiourl = data.val();
+        } else if (i == 1) {
           c1 = data.val();
         } else if (i == 2) {
           c2 = data.val();
@@ -93,6 +95,7 @@ const History = (props) => {
         color1: c1,
         color2: c2,
         imageurl: imageurl,
+        audiourl: audiourl,
       });
     });
 
@@ -186,7 +189,9 @@ const History = (props) => {
     e.preventDefault();
     setPassword(e.target.value);
   };
-  let idt = '';
+
+  const [audio, setAudio] = useState(null);
+
   return (
     <div>
       {user === 'wait' ? (
@@ -263,6 +268,29 @@ const History = (props) => {
                         </div>
                       </div>
                       <hr></hr>
+                      <div>AUDIO FILE:</div>
+                      <p>
+                        <button
+                          onClick={() => {
+                            if (audio) {
+                              audio.pause();
+                            }
+                            var audio2 = new Audio(item.audiourl);
+                            setAudio(audio2);
+                            audio2.play();
+                          }}
+                        >
+                          Play
+                        </button>
+                        <button
+                          onClick={() => {
+                            audio.pause();
+                            setAudio(null);
+                          }}
+                        >
+                          Stop
+                        </button>
+                      </p>
                       <div>IMAGE:</div>
                       <div>
                         <img src={item.imageurl} width="200"></img>
@@ -288,6 +316,7 @@ const History = (props) => {
               Create a new transcription
             </button>
           </Link>
+          <div style={{ height: `50px` }}></div>
         </div>
       ) : (
         <LoginPage

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TooltipDefinition } from 'carbon-components-react';
 import KeywordTooltip from '../KeywordTooltip';
@@ -92,7 +92,7 @@ export const TranscriptBox = ({
   const [name, setName] = useState('');
   const [imageurl, setImageURL] = useState('');
   const [image, setImage] = useState('');
-  const [lastTimestamp, setLastTimestamp] = useState([]);
+  const [audiourl, setAudioURL] = useState('');
 
   const onChangeT1 = (e) => {
     setTitle1(e.target.value);
@@ -126,9 +126,26 @@ export const TranscriptBox = ({
     }
   };
 
-  if (transcriptArray[0] !== null && transcriptArray[0] !== undefined) {
-    console.log(transcriptArray[0].timestamps);
-  }
+  // if (transcriptArray[0] !== null && transcriptArray[0] !== undefined) {
+  //   console.log(transcriptArray[0].timestamps);
+  // }
+
+  useEffect(() => {
+    if (window.audio) {
+      try {
+        let reader = new FileReader();
+        reader.onload = function (ev) {
+          setAudioURL(ev.target.result);
+          // console.log(audiourl);
+          // console.log(ev.target.result);
+        };
+        reader.readAsDataURL(window.audio);
+      } catch (err) {
+        setAudioURL(window.audio);
+        // console.log(window.audio);
+      }
+    }
+  }, [window.audio]);
 
   const stopAudio = () => {
     onStopPlayingSample();
@@ -154,14 +171,13 @@ export const TranscriptBox = ({
       color1: color1,
       color2: color2,
       imageurl: imageurl,
-      // audioFile: window.audio,           // not working
+      audiourl: audiourl,
     };
 
     axios
       .post(`/text/${fire.auth().currentUser.uid}.json`, inputText)
       .then((response) => {
         window.location.href = '/';
-        // console.log()
       })
       .catch((error) => console.log(error));
   };
